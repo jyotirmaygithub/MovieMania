@@ -1,6 +1,16 @@
 import { ChevronDownIcon } from "@heroicons/react/24/solid";
 import React, { useState, useEffect, useRef } from "react";
 
+// Example genre list with IDs (replace with your actual genre data)
+const GENRES = [
+  { id: 28, name: "Action" },
+  { id: 12, name: "Adventure" },
+  { id: 35, name: "Comedy" },
+  { id: 18, name: "Drama" },
+  { id: 27, name: "Horror" },
+  { id: 878, name: "Sci-Fi" }
+];
+
 const MovieGenresBox = ({ applyFilters }) => {
   const [isVisible, setIsVisible] = useState(false);
   const [selectedGenres, setSelectedGenres] = useState([]);
@@ -29,11 +39,11 @@ const MovieGenresBox = ({ applyFilters }) => {
     };
   }, [isVisible]);
 
-  const handleGenreChange = (genre) => {
+  const handleGenreChange = (genreId) => {
     setSelectedGenres((prevGenres) =>
-      prevGenres.includes(genre)
-        ? prevGenres.filter((g) => g !== genre)
-        : [...prevGenres, genre]
+      prevGenres.includes(genreId)
+        ? prevGenres.filter((id) => id !== genreId)
+        : [...prevGenres, genreId]
     );
   };
 
@@ -52,7 +62,8 @@ const MovieGenresBox = ({ applyFilters }) => {
         onClick={toggleVisibility}
         className="bg-black text-white p-2 mb-2 border border-white flex justify-center items-center gap-4"
       >
-       <p>Filters</p> <ChevronDownIcon className="h-4"/>
+        <p>Filters</p>
+        <ChevronDownIcon className="h-4" />
       </button>
       {isVisible && (
         <div
@@ -62,16 +73,17 @@ const MovieGenresBox = ({ applyFilters }) => {
           <div className="mb-4">
             <h4 className="text-lg mb-2">Genres</h4>
             <ul className="list-none flex flex-wrap space-x-2">
-              {["Action", "Comedy", "Drama", "Horror", "Sci-Fi"].map((genre) => (
-                <li key={genre}>
-                  <label>
+              {GENRES.map(({ id, name }) => (
+                <li key={id}>
+                  <label className="flex items-center space-x-2">
                     <input
                       type="checkbox"
-                      value={genre}
-                      onChange={() => handleGenreChange(genre)}
-                      checked={selectedGenres.includes(genre)}
+                      value={id}
+                      onChange={() => handleGenreChange(id)}
+                      checked={selectedGenres.includes(id)}
+                      className="form-checkbox"
                     />
-                    {genre}
+                    <span>{name}</span>
                   </label>
                 </li>
               ))}
@@ -79,37 +91,41 @@ const MovieGenresBox = ({ applyFilters }) => {
           </div>
           <div className="mb-4">
             <h4 className="text-lg mb-2">Release Year Range</h4>
-            <input
-              type="number"
-              placeholder="Min"
-              value={releaseYearRange.min}
-              onChange={(e) => setReleaseYearRange({ ...releaseYearRange, min: e.target.value })}
-              className="bg-gray-700 text-white p-1 mr-2"
-            />
-            <input
-              type="number"
-              placeholder="Max"
-              value={releaseYearRange.max}
-              onChange={(e) => setReleaseYearRange({ ...releaseYearRange, max: e.target.value })}
-              className="bg-gray-700 text-white p-1"
-            />
+            <div className="flex space-x-2">
+              <input
+                type="number"
+                placeholder="Min"
+                value={releaseYearRange.min}
+                onChange={(e) => setReleaseYearRange({ ...releaseYearRange, min: e.target.value })}
+                className="bg-gray-700 text-white p-1 flex-1"
+              />
+              <input
+                type="number"
+                placeholder="Max"
+                value={releaseYearRange.max}
+                onChange={(e) => setReleaseYearRange({ ...releaseYearRange, max: e.target.value })}
+                className="bg-gray-700 text-white p-1 flex-1"
+              />
+            </div>
           </div>
           <div className="mb-4">
             <h4 className="text-lg mb-2">Rating Range</h4>
-            <input
-              type="number"
-              placeholder="Min"
-              value={ratingRange.min}
-              onChange={(e) => setRatingRange({ ...ratingRange, min: e.target.value })}
-              className="bg-gray-700 text-white p-1 mr-2"
-            />
-            <input
-              type="number"
-              placeholder="Max"
-              value={ratingRange.max}
-              onChange={(e) => setRatingRange({ ...ratingRange, max: e.target.value })}
-              className="bg-gray-700 text-white p-1"
-            />
+            <div className="flex space-x-2">
+              <input
+                type="number"
+                placeholder="Min"
+                value={ratingRange.min}
+                onChange={(e) => setRatingRange({ ...ratingRange, min: e.target.value })}
+                className="bg-gray-700 text-white p-1 flex-1"
+              />
+              <input
+                type="number"
+                placeholder="Max"
+                value={ratingRange.max}
+                onChange={(e) => setRatingRange({ ...ratingRange, max: e.target.value })}
+                className="bg-gray-700 text-white p-1 flex-1"
+              />
+            </div>
           </div>
           <button
             onClick={handleApplyFilters}
