@@ -2,8 +2,9 @@ import React, { useEffect, useState, useRef, useCallback } from 'react';
 import Logo from '../components/header/logo';
 import Search from '../components/header/search';
 import MovieCard from '../layout/movieCard';
-import Genre from "../components/category/genre";
+import MovieGenresBox from "../components/category/genre"; // Ensure the import path is correct
 import Loading from '../components/loader/loading';
+import ScrollToTopButton from '../components/scrollTop/scrollTop';
 
 const API_URL = process.env.REACT_APP_API_URL;
 const SEARCH_API = process.env.REACT_APP_SEARCH_API;
@@ -14,11 +15,13 @@ function App() {
   const [page, setPage] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
   const [selectedGenres, setSelectedGenres] = useState([]);
+  const [releaseYearRange, setReleaseYearRange] = useState({ min: '', max: '' });
+  const [ratingRange, setRatingRange] = useState({ min: '', max: '' });
   const loader = useRef(null);
 
   useEffect(() => {
-    handleSearch(); // Fetch movies whenever searchTerm or selectedGenres change
-  }, [searchTerm, selectedGenres]);
+    handleSearch(); // Fetch movies whenever searchTerm, selectedGenres, releaseYearRange, or ratingRange change
+  }, [searchTerm, selectedGenres, releaseYearRange, ratingRange]);
 
   useEffect(() => {
     if (page > 1) {
@@ -29,10 +32,11 @@ function App() {
   const fetchMovies = async () => {
     setIsLoading(true);
     const genreFilter = selectedGenres.length > 0 ? `&with_genres=${selectedGenres.join(',')}` : '';
-    console.log("sleected =",selectedGenres)
+    const yearFilter = (releaseYearRange.min && releaseYearRange.max) ? `&primary_release_date.gte=${releaseYearRange.min}-01-01&primary_release_date.lte=${releaseYearRange.max}-12-31` : '';
+    const ratingFilter = (ratingRange.min && ratingRange.max) ? `&vote_average.gte=${ratingRange.min}&vote_average.lte=${ratingRange.max}` : '';
     const searchURL = searchTerm ? `${SEARCH_API}${searchTerm}&page=${page}` : `${API_URL}&page=${page}`;
-    const URL = `${searchURL}${genreFilter}`;
-    
+    const URL = `${searchURL}${genreFilter}${yearFilter}${ratingFilter}`;
+
     try {
       const response = await fetch(URL);
       const data = await response.json();
@@ -80,14 +84,16 @@ function App() {
     return () => observer.disconnect(); // Clean up observer on unmount
   }, [handleObserver]);
 
-  const applyFilters = (filters) => {
-    setSelectedGenres(filters.genres);
+  const applyFilters = ({ genres, releaseYearRange, ratingRange }) => {
+    setSelectedGenres(genres);
+    setReleaseYearRange(releaseYearRange);
+    setRatingRange(ratingRange);
   };
 
   return (
     <>
       <header className="flex flex-wrap justify-between items-center bg-bg-color py-4 px-4 md:py-5 md:px-6 text-white font-lilita">
-        <Logo />
+        <Logo setterm={setSearchTerm}  />
         <Search
           searchTerm={searchTerm}
           setSearchTerm={setSearchTerm}
@@ -95,7 +101,7 @@ function App() {
         />
       </header>
       <main className="flex flex-wrap px-4 py-4 md:px-8 md:py-6 bg-bg2-color">
-        <Genre applyFilters={applyFilters} />
+        {searchTerm === "" && <MovieGenresBox applyFilters={applyFilters} />}
         <div className="flex flex-wrap gap-4 w-full">
           {movies.map((movie, index) => (
             <MovieCard key={index} movie={movie} getColor={getColor} />
@@ -103,6 +109,7 @@ function App() {
           {isLoading && <Loading />}
         </div>
       </main>
+      <ScrollToTopButton/>
       <div ref={loader} className="py-4" />
     </>
   );

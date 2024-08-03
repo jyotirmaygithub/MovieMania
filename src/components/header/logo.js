@@ -1,9 +1,13 @@
-import React from 'react';
+import React from "react";
 
-const Logo = () => (
-  <ul className="flex">
-    <li className="text-4xl">MovieMania</li>
-  </ul>
-);
-
-export default Logo;
+export default function Logo({ setterm ,handleSearching}) {
+  function handleSubmit() {
+    setterm("");
+    // handleSearching()
+  }
+  return (
+    <ul className="flex cursor-pointer" onClick={handleSubmit}>
+      <li className="text-4xl">MovieMania</li>
+    </ul>
+  );
+}
