@@ -1,70 +1,98 @@
-# Getting Started with Create React App
+# Movie Mania
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Movie Mania is a web application built with React.js and Tailwind CSS, providing users with the latest movies and advanced filtering options. The app features infinite scrolling, a dynamic search feature, and a responsive, mobile-first UI.
 
-## Available Scripts
+## Table of Contents
 
-In the project directory, you can run:
+- [Features](#features)
+- [Technologies Used](#technologies-used)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Environment Variables](#environment-variables)
+- [Contributing](#contributing)
+- [License](#license)
 
-### `npm start`
+## Features
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- **Responsive UI:** Mobile-first design ensuring compatibility across devices.
+- **Latest Movies:** Browse the most popular movies.
+- **Search:** Dynamic search for movies by title.
+- **Infinite Scrolling:** Seamlessly load more movies as you scroll.
+- **Advanced Filtering:** Filter movies by genre, release year range, and rating range
+- **Favorite Movies:** Save and manage your favorite movies locally.
+- **Accessibility:** SEO-friendly and accessible design following best practices.
+- **Clean Code:** Well-structured, clean code following best practices.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Technologies Used
 
-### `npm test`
+- React.js
+- Tailwind CSS
+- Heroicons (for UI icons)
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Installation
 
-### `npm run build`
+To run this project locally, follow these steps:
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+1. **Clone the repository:**
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+    ```bash
+    git clone https://github.com/yourusername/movie-mania.git
+    cd movie-mania
+    ```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+2. **Install dependencies:**
 
-### `npm run eject`
+    ```bash
+    npm install
+    ```
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+3. **Set up environment variables:**
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+    Create a `.env` file in the root of the project and add the following:
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+    ```plaintext
+    REACT_APP_API_URL=https://api.themoviedb.org/3/discover/movie?sort_by=popularity.desc&api_key=YOUR_API_KEY&page=1
+    REACT_APP_IMG_PATH=https://image.tmdb.org/t/p/w1280
+    REACT_APP_SEARCH_API=https://api.themoviedb.org/3/search/movie?api_key=YOUR_API_KEY&query=
+    ```
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+    Replace `YOUR_API_KEY` with your actual API key from [The Movie Database (TMDB)](https://www.themoviedb.org/).
 
-## Learn More
+4. **Start the development server:**
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+    ```bash
+    npm start
+    ```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+    The application should now be running on `http://localhost:3000`.
 
-### Code Splitting
+## Usage
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+- **Browse Movies:** Scroll down to load more movies using infinite scrolling.
+- **Search Movies:** Use the search bar at the top to find movies by title.
+- **Filter Movies:** Use the filtering options to narrow down movies by genre, release year, and rating.
+- **Save Favorites:** Click on the heart icon to save movies to your favorites list.
 
-### Analyzing the Bundle Size
+## Environment Variables
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+This project requires the following environment variables to function correctly:
 
-### Making a Progressive Web App
+- `REACT_APP_API_URL`: The API URL for fetching movies.
+- `REACT_APP_IMG_PATH`: The base URL for movie images.
+- `REACT_APP_SEARCH_API`: The API URL for searching movies.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+## Contributing
 
-### Advanced Configuration
+Contributions are welcome! Please follow these steps to contribute:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+1. Fork the repository.
+2. Create a new branch: `git checkout -b feature/your-feature-name`.
+3. Make your changes and commit them: `git commit -m 'Add some feature'`.
+4. Push to the branch: `git push origin feature/your-feature-name`.
+5. Open a pull request.
 
-### Deployment
+Please make sure your code follows the project's coding standards and includes appropriate tests.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+## License
 
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more information.
